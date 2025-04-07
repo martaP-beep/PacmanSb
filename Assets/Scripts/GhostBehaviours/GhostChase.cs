@@ -40,7 +40,7 @@ public class GhostChase : GhostBehaviour
             }
 
             // ustalenie kierunku na najlepszy
-
+            Ghost.Movement.SetDirection(direction);
         }
     }
 }

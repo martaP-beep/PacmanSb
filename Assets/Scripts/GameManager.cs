@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text scoreText;
     [SerializeField] private Text livesText;
 
+
+    [SerializeField] private Ghost[] ghosts;
+
     private int lives = 3;
     private int score = 0;
 
@@ -56,6 +59,10 @@ public class GameManager : MonoBehaviour
     {
         // reset pacman state
         pacman.ResetState();
+
+        foreach (Ghost ghost in ghosts) { 
+        ghost.ResetState();
+        }
     }
 
     private void SetLives(int lives)
@@ -92,5 +99,28 @@ public class GameManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void PacmanEaten()
+    {
+        pacman.gameObject.SetActive(false);
+        SetLives(lives - 1);
+        if(lives > 0)
+        {
+            Invoke(nameof(ResetState), 2);
+        }
+        else
+        {
+            GameOver();
+        }
+       
+    }
+
+    void GameOver()
+    {
+        foreach(Ghost ghost in ghosts)
+        {
+            ghost.gameObject.SetActive(false);
+        }
     }
 }
